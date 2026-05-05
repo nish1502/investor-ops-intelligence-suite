@@ -41,7 +41,7 @@ export default function Dashboard() {
   const [isSearching, setIsSearching] = useState(false);
 
   const [bookingObjective, setBookingObjective] = useState("");
-  const [bookingStatus, setBookingStatus] = useState<"idle" | "confirming" | "confirmed">("idle");
+  const [bookingStatus, setBookingStatus] = useState<"idle" | "confirming" | "confirmed" | "sent">("idle");
   const [bookingId, setBookingId] = useState("");
   const [m3Response, setM3Response] = useState<string>("");
 
@@ -226,8 +226,9 @@ export default function Dashboard() {
   };
 
   // --- Handlers ---
-  const handleUnifiedSearch = async (overrideQuery?: string) => {
-    const query = (overrideQuery || searchQuery).trim();
+  const handleUnifiedSearch = async (overrideQuery?: string | React.MouseEvent) => {
+    const finalQuery = typeof overrideQuery === 'string' ? overrideQuery : searchQuery;
+    const query = (finalQuery || "").trim();
     setValidationMessage("");
     setErrorMessage("");
     
@@ -286,7 +287,7 @@ export default function Dashboard() {
         rawFacts[0] = resolveNumericConsistency(rawFacts[0]);
       }
 
-      const cleanFacts = rawFacts.map(s => cleanText(s)).slice(0, 3);
+      const cleanFacts = rawFacts.map((s: string) => cleanText(s)).slice(0, 3);
       while (cleanFacts.length < 3) cleanFacts.push("Additional factual detail pending verification");
 
       // Process and clean explanation

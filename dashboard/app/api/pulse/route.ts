@@ -13,12 +13,12 @@ export async function GET() {
     const trendsPath = path.join(pulseDir, 'v3_trends.json');
     const reportPath = path.join(pulseDir, 'v3_weekly_pulse.md');
     
-    let trends = {};
+    let trends: Record<string, any> = {};
     if (fs.existsSync(trendsPath)) {
       trends = JSON.parse(fs.readFileSync(trendsPath, 'utf8'));
     }
     
-    let actionIdeas = [];
+    let actionIdeas: any[] = [];
     if (fs.existsSync(reportPath)) {
       const content = fs.readFileSync(reportPath, 'utf8');
       const actionSection = content.split('### Action Ideas')[1];
