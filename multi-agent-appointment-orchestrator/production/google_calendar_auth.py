@@ -26,33 +26,14 @@ def get_gmail_service():
     creds = authenticate()
     return build('gmail', 'v1', credentials=creds) if creds else None
 
-import json
-
 def authenticate():
     """Handles the OAuth2 flow and returns credentials."""
     creds = None
-    SCOPES = [
-        'https://www.googleapis.com/auth/calendar',
-        'https://www.googleapis.com/auth/documents',
-        'https://www.googleapis.com/auth/gmail.compose'
-    ]
-    
-    # Production: Priority 1 - Environment Variable
-    env_token = os.getenv("GOOGLE_TOKEN_JSON")
-    if env_token:
-        try:
-            print("🔐 Using GOOGLE_TOKEN_JSON from Environment Variables")
-            info = json.loads(env_token)
-            creds = Credentials.from_authorized_user_info(info, SCOPES)
-        except Exception as e:
-            print(f"⚠️ Error loading GOOGLE_TOKEN_JSON: {e}")
-
-    # Local: Priority 2 - token.json file
     base_dir = os.path.dirname(os.path.abspath(__file__))
     token_path = os.path.join(base_dir, 'token.json')
     creds_path = os.path.join(base_dir, 'credentials.json')
 
-    if not creds and os.path.exists(token_path):
+    if os.path.exists(token_path):
         creds = Credentials.from_authorized_user_file(token_path, SCOPES)
     
     if not creds or not creds.valid:
