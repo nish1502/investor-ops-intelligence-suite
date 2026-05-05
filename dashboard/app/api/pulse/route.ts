@@ -5,11 +5,15 @@ import path from 'path';
 export async function GET() {
   try {
     const rootDir = process.cwd();
-    // In local dev, process.cwd() is the dashboard directory. 
-    // We need to go up one level to reach the project root.
+    // Use the local data directory
     const projectRoot = path.join(rootDir, '..');
     const pulseDir = path.join(projectRoot, 'indmoney-pulse', 'output');
     
+    // Cloud Safety: Ensure we don't crash if directory is missing
+    if (!fs.existsSync(pulseDir)) {
+      return NextResponse.json({ trends: {}, actionIdeas: [] });
+    }
+
     const trendsPath = path.join(pulseDir, 'v3_trends.json');
     const reportPath = path.join(pulseDir, 'v3_weekly_pulse.md');
     

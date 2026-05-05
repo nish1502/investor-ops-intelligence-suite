@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
+export const dynamic = 'force-dynamic';
 import {
   LayoutDashboard,
   Search,
