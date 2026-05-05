@@ -1,38 +1,32 @@
 {
-  "App Performance": {
-    "current_pct": 27.4,
-    "previous_pct": 19.0,
-    "change": 8.3,
-    "direction": "up"
+  "Payments & Rewards": {
+    "current_pct": 5.5,
+    "previous_pct": 8.0,
+    "change": 2.5,
+    "direction": "down"
   },
   "Trading Features": {
-    "current_pct": 32.3,
-    "previous_pct": 26.8,
-    "change": 5.5,
-    "direction": "up"
-  },
-  "UI Problems": {
-    "current_pct": 0.0,
-    "previous_pct": 21.5,
-    "change": 21.5,
+    "current_pct": 26.5,
+    "previous_pct": 32.3,
+    "change": 5.8,
     "direction": "down"
   },
   "High Charges": {
-    "current_pct": 9.0,
-    "previous_pct": 7.8,
-    "change": 1.2,
+    "current_pct": 8.5,
+    "previous_pct": 9.0,
+    "change": 0.5,
+    "direction": "down"
+  },
+  "App Performance": {
+    "current_pct": 32.5,
+    "previous_pct": 27.4,
+    "change": 5.1,
     "direction": "up"
   },
   "Account Issues": {
-    "current_pct": 23.4,
-    "previous_pct": 24.9,
-    "change": 1.5,
-    "direction": "down"
-  },
-  "Payments & Rewards": {
-    "current_pct": 8.0,
-    "previous_pct": 0.0,
-    "change": 8.0,
+    "current_pct": 27.0,
+    "previous_pct": 23.4,
+    "change": 3.6,
     "direction": "up"
   }
 }

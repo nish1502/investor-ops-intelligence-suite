@@ -100,7 +100,6 @@ The system isn't just built; it's **Verified**.
 ├── mf-rag-faq-indmoney/        # High-Precision RAG Engine (M1)
 ├── multi-agent-appointment.../ # Voice Orchestrator & MCP Workflow (M3)
 ├── docs/                       # Technical Deep-Dives
-├── tools/                      # Diagnostic & Safety Test Scripts
 ├── SOURCES.md                  # Manifest of 38 Verified Institutional Links
 └── EVALS.md                    # Formal Performance Report
 ```

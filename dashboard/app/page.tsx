@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   LayoutDashboard,
   Search,
@@ -18,7 +18,8 @@ import {
   User,
   ExternalLink,
   ClipboardList,
-  Send
+  Send,
+  Upload
 } from "lucide-react";
 
 // --- Types ---
@@ -55,6 +56,7 @@ export default function Dashboard() {
   const [viewingSource, setViewingSource] = useState<"trends" | "pulse" | null>(null);
   const [isRunningAnalysis, setIsRunningAnalysis] = useState(false);
   const [analysisStep, setAnalysisStep] = useState("");
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [searchStatus, setSearchStatus] = useState<"idle" | "loading" | "success" | "error" | "empty" | "invalid_input">("idle");
   const [validationMessage, setValidationMessage] = useState("");
   const [lastDispatchedId, setLastDispatchedId] = useState<string | null>(null);
@@ -128,6 +130,41 @@ export default function Dashboard() {
       setErrorMessage("Analysis failed. Please check backend logs.");
       setIsRunningAnalysis(false);
       setAnalysisStep("");
+    }
+  };
+
+  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    setIsRunningAnalysis(true);
+    setAnalysisStep("Uploading CSV...");
+    setErrorMessage("");
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      // Step 1: Upload
+      const res = await fetch("/api/pulse", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!res.ok) throw new Error("Upload failed");
+      
+      setAnalysisStep("Initializing Pulse Engine...");
+      
+      // Step 2: Trigger Analysis (Reuse existing logic)
+      await handleRunAnalysis();
+      
+    } catch (err) {
+      console.error("Upload/Analysis failed:", err);
+      setErrorMessage("Upload failed. Ensure backend is running.");
+      setIsRunningAnalysis(false);
+      setAnalysisStep("");
+    } finally {
+      if (fileInputRef.current) fileInputRef.current.value = "";
     }
   };
 
@@ -511,13 +548,29 @@ export default function Dashboard() {
                       {analysisStep}
                     </div>
                   ) : (
-                    <button 
-                      onClick={handleRunAnalysis}
-                      className="flex items-center gap-2 bg-white hover:bg-indigo-50 text-indigo-600 px-3 py-1.5 rounded-full text-[10px] font-bold border border-indigo-100 transition-all shadow-sm active:scale-95"
-                    >
-                      <Zap size={12} fill="currentColor" />
-                      Run Analysis
-                    </button>
+                    <div className="flex items-center gap-2">
+                      <input 
+                        type="file" 
+                        ref={fileInputRef} 
+                        onChange={handleFileUpload} 
+                        className="hidden" 
+                        accept=".csv"
+                      />
+                      <button 
+                        onClick={() => fileInputRef.current?.click()}
+                        className="flex items-center gap-2 bg-white hover:bg-gray-50 text-gray-600 px-3 py-1.5 rounded-full text-[10px] font-bold border border-gray-200 transition-all shadow-sm active:scale-95"
+                      >
+                        <Upload size={12} />
+                        Upload & Analyze
+                      </button>
+                      <button 
+                        onClick={handleRunAnalysis}
+                        className="flex items-center gap-2 bg-white hover:bg-indigo-50 text-indigo-600 px-3 py-1.5 rounded-full text-[10px] font-bold border border-indigo-100 transition-all shadow-sm active:scale-95"
+                      >
+                        <Zap size={12} fill="currentColor" />
+                        Run Analysis
+                      </button>
+                    </div>
                   )}
                   <div className="flex items-center gap-2 bg-gray-50 text-gray-400 px-3 py-1.5 rounded-full text-[10px] font-semibold border border-gray-100">
                     <span className="relative flex h-2 w-2">
