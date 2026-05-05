@@ -62,7 +62,7 @@ export async function POST() {
         ensureDir(publicDestDir);
         ensureDir(projectDestDir);
 
-        const filesToSync = ["v3_trends.json", "v3_weekly_pulse.md"];
+        const filesToSync = ["v3_trends.json", "v3_weekly_pulse.md", "v5_fee_explanation.json"];
         filesToSync.forEach(file => {
           const src = path.join(outputSourceDir, file);
           const pubDest = path.join(publicDestDir, file);
@@ -70,7 +70,14 @@ export async function POST() {
           
           if (fs.existsSync(src)) {
             fs.copyFileSync(src, pubDest);
-            fs.copyFileSync(src, projDest);
+            // Only try to sync to peer if it's accessible (fails gracefully in Vercel)
+            try {
+              if (fs.existsSync(path.dirname(projDest))) {
+                fs.copyFileSync(src, projDest);
+              }
+            } catch (err) {
+              console.warn(`Could not sync to peer directory: ${projDest}`);
+            }
           }
         });
       } catch (e) {

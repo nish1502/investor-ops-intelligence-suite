@@ -5,12 +5,21 @@ import path from 'path';
 export async function GET() {
   try {
     const rootDir = process.cwd();
-    // Use the local data directory
-    const projectRoot = path.join(rootDir, '..');
-    const pulseDir = path.join(projectRoot, 'indmoney-pulse', 'output');
+    
+    // Check both local public/output and peer indmoney-pulse/output
+    const publicOutputDir = path.join(rootDir, 'public', 'output');
+    const peerOutputDir = path.join(rootDir, '..', 'indmoney-pulse', 'output');
+    
+    let pulseDir = publicOutputDir;
+    
+    // In Vercel, public/output is safer. Locally, peer might be more up-to-date.
+    if (!fs.existsSync(pulseDir) && fs.existsSync(peerOutputDir)) {
+      pulseDir = peerOutputDir;
+    }
     
     // Cloud Safety: Ensure we don't crash if directory is missing
     if (!fs.existsSync(pulseDir)) {
+      console.log('>>> Pulse directory not found, returning empty data');
       return NextResponse.json({ trends: {}, actionIdeas: [] });
     }
 

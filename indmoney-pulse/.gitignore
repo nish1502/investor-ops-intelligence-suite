@@ -2,7 +2,8 @@
 __pycache__/
 *.pyc
 .DS_Store
-output/
+output/*
+!output/.gitkeep
 frontend/.next/
 frontend/node_modules/
 backend/venv/

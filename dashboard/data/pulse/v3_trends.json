@@ -1,0 +1,32 @@
+{
+  "Payments & Rewards": {
+    "current_pct": 5.5,
+    "previous_pct": 8.0,
+    "change": 2.5,
+    "direction": "down"
+  },
+  "Trading Features": {
+    "current_pct": 26.5,
+    "previous_pct": 32.3,
+    "change": 5.8,
+    "direction": "down"
+  },
+  "High Charges": {
+    "current_pct": 8.5,
+    "previous_pct": 9.0,
+    "change": 0.5,
+    "direction": "down"
+  },
+  "App Performance": {
+    "current_pct": 32.5,
+    "previous_pct": 27.4,
+    "change": 5.1,
+    "direction": "up"
+  },
+  "Account Issues": {
+    "current_pct": 27.0,
+    "previous_pct": 23.4,
+    "change": 3.6,
+    "direction": "up"
+  }
+}
