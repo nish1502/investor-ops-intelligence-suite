@@ -1,0 +1,53 @@
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Python
+__pycache__/
+*.py[cod]
+*.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Frontend (Next.js)
+node_modules/
+.next/
+out/
+build/
+.vercel
+*.log
+.eslintcache
+
+# System
+.DS_Store
+Thumbs.db
+
+# Database
+*.sqlite3
+*.db
+
+# Sensitive Info
+CREDENTIALS.json
+TOKEN.json

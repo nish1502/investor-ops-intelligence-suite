@@ -1,0 +1,14 @@
+fastapi
+uvicorn
+requests
+psycopg2-binary
+python-dotenv
+sentence-transformers
+torch
+numpy
+pandas
+groq
+elevenlabs
+re
+json
+psycopg2
