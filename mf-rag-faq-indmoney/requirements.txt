@@ -1,0 +1,14 @@
+fastapi
+uvicorn
+psycopg2-binary
+pgvector
+groq
+python-dotenv
+pydantic
+sentence-transformers
+torch
+numpy
+requests
+pypdf
+beautifulsoup4
+playwright
