@@ -1,3 +1,6 @@
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.0.1+cpu
+sentence-transformers
 fastapi
 uvicorn
 psycopg2-binary
@@ -5,10 +8,7 @@ pgvector
 groq
 python-dotenv
 pydantic
-sentence-transformers
-torch
 numpy
 requests
 pypdf
 beautifulsoup4
-playwright
