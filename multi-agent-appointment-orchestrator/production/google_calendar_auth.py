@@ -28,25 +28,52 @@ def get_gmail_service():
 
 def authenticate():
     """Handles the OAuth2 flow and returns credentials."""
+    import json
     creds = None
     base_dir = os.path.dirname(os.path.abspath(__file__))
     token_path = os.path.join(base_dir, 'token.json')
     creds_path = os.path.join(base_dir, 'credentials.json')
 
-    if os.path.exists(token_path):
+    # 1. Try Environment Variable first (Cloud-Ready)
+    token_env = os.getenv("GOOGLE_TOKEN")
+    if token_env:
+        try:
+            print("🔑 Using GOOGLE_TOKEN from environment variables...")
+            creds_data = json.loads(token_env)
+            creds = Credentials.from_authorized_user_info(creds_data, SCOPES)
+        except Exception as e:
+            print(f"⚠️ Error loading GOOGLE_TOKEN from env: {e}")
+
+    # 2. Fallback to Local Token File
+    if not creds and os.path.exists(token_path):
         creds = Credentials.from_authorized_user_file(token_path, SCOPES)
     
+    # 3. Refresh or Re-authenticate
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
+            print("🔄 Refreshing expired Google credentials...")
             creds.refresh(Request())
         else:
-            if not os.path.exists(creds_path):
-                print(f"❌ ERROR: credentials.json not found at {creds_path}!")
+            # Check for GOOGLE_CREDENTIALS env var for the Flow
+            creds_json_env = os.getenv("GOOGLE_CREDENTIALS")
+            if creds_json_env:
+                print("🔑 Using GOOGLE_CREDENTIALS from environment variables...")
+                creds_info = json.loads(creds_json_env)
+                flow = InstalledAppFlow.from_client_config(creds_info, SCOPES)
+            elif os.path.exists(creds_path):
+                flow = InstalledAppFlow.from_client_secrets_file(creds_path, SCOPES)
+            else:
+                print(f"❌ ERROR: No Google credentials found (Env or File)!")
                 return None
             
-            flow = InstalledAppFlow.from_client_secrets_file(creds_path, SCOPES)
+            # Note: run_local_server requires a browser, only works locally
             creds = flow.run_local_server(port=0)
         
-        with open(token_path, 'w') as token:
-            token.write(creds.to_json())
+        # Save the token locally if we are on a writable filesystem
+        try:
+            with open(token_path, 'w') as token:
+                token.write(creds.to_json())
+        except Exception:
+            pass 
+
     return creds
