@@ -14,6 +14,16 @@ By integrating **Review Analytics (M2)**, **High-Precision RAG (M1)**, and **Aut
 
 ---
 
+## 🌐 Deployed Live Environments
+Access the live production instances of the suite's components here:
+
+*   **🖥️ Unified Next.js Dashboard**: [https://investor-ops-intelligence-suite.vercel.app](https://investor-ops-intelligence-suite.vercel.app) — *The administrative, search, and scheduling portal.*
+*   **🧠 M1 RAG FAQ API Engine**: [https://m1-rag-faq.onrender.com](https://m1-rag-faq.onrender.com) — *The high-precision factsheet knowledge engine.*
+*   **🎙️ M3 Voice Agent Orchestrator**: [https://m3-orchestrator.onrender.com](https://m3-orchestrator.onrender.com) — *The theme-aware customer booking service.*
+
+---
+
+
 ## 👨‍💻 Why This Project Matters (Role-Based Skills)
 
 This repository demonstrates a multidisciplinary skill set essential for top-tier technology roles:
@@ -114,10 +124,4 @@ The system isn't just built; it's **Verified**.
 
 ---
 
-## 🚀 Future Roadmap
-- [ ] **Multi-Language Support**: Expanding Pulse analytics to regional languages.
-- [ ] **Predictive Churn**: Integrating M2 sentiment with historical CRM data.
-- [ ] **Real-Time Voice Streaming**: Moving from pre-recorded to WebRTC-based low-latency voice.
 
----
-*Developed by Nishita with a focus on Bridging Customer Insights and Operational Excellence.*
