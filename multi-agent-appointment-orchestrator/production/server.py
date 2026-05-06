@@ -38,30 +38,51 @@ orch = Orchestrator(nlu)
 sessions = {}
 
 def get_top_theme():
-    """Reads the latest top theme from M2 output (v3_trends.json)."""
+    """Reads the latest top theme from environment, HTTP URL, or M2 output file."""
     try:
-        # Use relative path or environment variable for production flexibility
+        # 1. Check for direct TOP_THEME environment variable (Highest Priority)
+        top_theme_env = os.getenv("TOP_THEME")
+        if top_theme_env:
+            print(f"🔑 Using TOP_THEME from environment variables: {top_theme_env}")
+            return top_theme_env
+
+        # 2. Get file path or URL
         current_dir = os.path.dirname(os.path.abspath(__file__))
         default_path = os.path.join(current_dir, "../../indmoney-pulse/backend/output/v3_trends.json")
         file_path = os.getenv("TRENDS_FILE_PATH", default_path)
         
-        if os.path.exists(file_path):
+        # 3. If it is an HTTP URL, fetch dynamically
+        if file_path.startswith("http://") or file_path.startswith("https://"):
+            import requests
+            print(f"🌐 Fetching trends dynamically from URL: {file_path}")
+            res = requests.get(file_path, timeout=5)
+            if res.status_code == 200:
+                data = res.json()
+                # Handle nested dict or direct list
+                if isinstance(data, dict) and "trends" in data:
+                    data = data["trends"]
+            else:
+                data = None
+        # 4. Fallback to local file
+        elif os.path.exists(file_path):
             with open(file_path, "r") as f:
                 data = json.load(f)
-                if not data:
-                    return None
-                
-                # Find the theme with the highest current_pct
-                top_theme = None
-                max_pct = -1.0
-                
-                for theme, stats in data.items():
+        else:
+            data = None
+
+        if data:
+            # Find the theme with the highest current_pct
+            top_theme = None
+            max_pct = -1.0
+            
+            for theme, stats in data.items():
+                if isinstance(stats, dict):
                     current_pct = stats.get("current_pct", 0)
                     if current_pct > max_pct:
                         max_pct = current_pct
                         top_theme = theme
-                
-                return top_theme
+            
+            return top_theme
     except Exception as e:
         print(f"⚠️ Error reading trends for greeting: {e}")
     return None
