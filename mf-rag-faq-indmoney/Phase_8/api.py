@@ -103,7 +103,9 @@ ADVICE_PHRASES = [
     "give me advice",
     "which scheme is good",
     "mutual fund is best",
-    "which fund is best"
+    "which fund is best",
+    "gives 20% returns",
+    "20% returns"
 ]
 
 def is_asking_advice(text):
