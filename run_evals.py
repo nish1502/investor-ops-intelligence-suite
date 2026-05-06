@@ -5,8 +5,8 @@ import re
 import time
 
 # --- Configuration ---
-M1_URL = "https://mf-rag-faq-indmoney.onrender.com/chat"
-M3_URL = "https://multi-agent-appointment-orchestrator.onrender.com/chat"
+M1_URL = os.getenv("M1_URL", "https://m1-rag-faq.onrender.com/chat")
+M3_URL = os.getenv("M3_URL", "https://m3-orchestrator.onrender.com/chat")
 
 # --- Evaluation Logic ---
 

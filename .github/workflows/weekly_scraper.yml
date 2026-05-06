@@ -1,0 +1,29 @@
+name: Weekly App Store Scraper
+
+on:
+  schedule:
+    # Runs at 00:00 every Monday (UTC)
+    - cron: '0 0 * * 1'
+  workflow_dispatch: # Allows manual triggering from GitHub Actions UI
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+
+      - name: Install Dependencies
+        run: |
+          pip install google-play-scraper
+
+      - name: Run Weekly Scraper
+        run: |
+          python indmoney-pulse/backend/src/phase1_ingestion/scraper.py
