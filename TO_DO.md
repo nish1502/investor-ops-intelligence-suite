@@ -1,0 +1,3 @@
+- system eval screen
+- demo video
+- future make dashboard better

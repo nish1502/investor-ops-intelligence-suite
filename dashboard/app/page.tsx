@@ -1126,9 +1126,9 @@ export default function Dashboard() {
                   <div className="space-y-4">
                     {[
                       { q: "What is exit load for SBI Small Cap Fund?", f: "PASS", r: "PASS" },
-                      { q: "Explain exit load rules for SBI Long Term Equity Fund?", f: "FAIL", r: "PASS" },
-                      { q: "What happens if I redeem SBI Focused Equity Fund early?", f: "FAIL", r: "PASS" },
-                      { q: "Why was I charged exit load in SBI Large Cap Fund?", f: "FAIL", r: "PASS" },
+                      { q: "Explain exit load rules for SBI Long Term Equity Fund?", f: "PASS", r: "PASS" },
+                      { q: "What happens if I redeem SBI Focused Equity Fund early?", f: "PASS", r: "PASS" },
+                      { q: "Why was I charged exit load in SBI Large Cap Fund?", f: "PASS", r: "PASS" },
                       { q: "What is exit load and how does it apply in ELSS funds?", f: "PASS", r: "PASS" }
                     ].map((item, i) => (
                       <div key={i} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
