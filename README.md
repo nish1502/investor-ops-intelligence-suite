@@ -62,7 +62,7 @@ Data moves across connected workflows to reduce operational delays:
 You can interact with the live endpoints of the platform here:
 
 *   **🖥️ Unified Dashboard**: [https://investor-ops-intelligence-suite.vercel.app](https://investor-ops-intelligence-suite.vercel.app) 
-*   **🧠 Knowledge API**: [https://m1-rag-faq.onrender.com](https://m1-rag-faq.onrender.com)
+*   **🧠 Knowledge API**: [https://m1-rag-faq.onrender.com](https://m1-rag-faq.onrender.com/docs)
 *   **🎙️ Scheduling Hub**: [https://m3-orchestrator.onrender.com](https://m3-orchestrator.onrender.com)
 
 ---
