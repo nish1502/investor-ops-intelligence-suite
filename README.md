@@ -130,6 +130,158 @@ Evaluated behavior constraints verified through standardized checks:
 
 ---
 
+# 🏗️ High-Level System Structure
+
+The platform was intentionally separated into independent operational layers instead of one monolithic AI application.
+
+```text
+investor-ops-intelligence-suite/
+│
+├── dashboard/                           
+│   ├── app/page.tsx
+│   ├── app/api/m2/route.ts
+│   └── app/api/run-analysis/
+│
+├── mf-rag-faq-indmoney/                
+│   ├── retrieval.py
+│   ├── embedding.py
+│   ├── scraper.py
+│   ├── api.py
+│   └── architecture.md
+│
+├── indmoney-pulse/                     
+│   ├── backend/main.py
+│   ├── backend/src/phase1_ingestion/
+│   ├── backend/src/phase2_theme_engine/
+│   ├── backend/src/phase3_pulse_generator/
+│   └── ARCHITECTURE.md
+│
+├── multi-agent-appointment-orchestrator/
+│   ├── production/server.py
+│   ├── production/orchestrator.py
+│   ├── production/booking_logic.py
+│   ├── production/nlu_engine.py
+│   ├── production/mcp_server.py
+│   └── production/google_calendar_auth.py
+│
+├── EVALS.md
+├── run_evals.py
+└── README.md
+```
+
+---
+
+# 🔹 Retrieval Layer (M1 — RAG System)
+
+### Purpose
+Grounded financial retrieval using official AMC, SEBI, and AMFI documents.
+
+### Important Files
+
+| File | Responsibility |
+|---|---|
+| `scraper.py` | Collects official financial documents |
+| `embedding.py` | Converts chunks into vector embeddings |
+| `retrieval.py` | Retrieves contextually relevant chunks |
+| `api.py` | Exposes retrieval endpoints |
+| `architecture.md` | Documents RAG workflow architecture |
+
+### Design Goal
+Reduce hallucinations using retrieval-first grounded generation.
+
+---
+
+# 🔹 Operational Intelligence Layer (M2 — Pulse Engine)
+
+### Purpose
+Transforms customer reviews into operational insights and trend summaries.
+
+### Important Files
+
+| File / Folder | Responsibility |
+|---|---|
+| `main.py` | Main analytics workflow controller |
+| `phase1_ingestion/` | Cleans and ingests review datasets |
+| `phase2_theme_engine/` | Clusters reviews into operational themes |
+| `phase3_pulse_generator/` | Generates summaries and recommendations |
+| `ARCHITECTURE.md` | Pulse system architecture notes |
+
+### Design Goal
+Convert large-scale qualitative feedback into structured operational intelligence.
+
+---
+
+# 🔹 Workflow Orchestration Layer (M3)
+
+### Purpose
+Converts conversational requests into operational workflows.
+
+### Important Files
+
+| File | Responsibility |
+|---|---|
+| `server.py` | FastAPI orchestration backend |
+| `orchestrator.py` | Workflow coordination and state management |
+| `booking_logic.py` | Slot validation and operational rules |
+| `nlu_engine.py` | Intent detection and entity extraction |
+| `mcp_server.py` | Gmail, Docs, and Calendar integrations |
+| `google_calendar_auth.py` | OAuth authentication flows |
+
+### Design Goal
+Separate AI interpretation from deterministic operational execution.
+
+---
+
+# 🔹 Unified Dashboard Layer
+
+### Purpose
+Acts as the centralized operational control plane.
+
+### Important Files
+
+| File | Responsibility |
+|---|---|
+| `page.tsx` | Unified operational dashboard |
+| `route.ts` | Analytics API integration |
+| `run-analysis/` | Workflow trigger endpoints |
+
+### Design Goal
+Provide one interface across retrieval, analytics, and orchestration systems.
+
+---
+
+# 🔹 Evaluation & Reliability Layer
+
+### Important Files
+
+| File | Responsibility |
+|---|---|
+| `EVALS.md` | Evaluation methodology |
+| `run_evals.py` | Retrieval and compliance testing |
+
+### Evaluation Focus
+- retrieval relevance
+- grounded responses
+- refusal behavior
+- PII protection
+- operational reliability
+
+---
+
+# 🛡️ Design Philosophy
+
+The platform was designed around:
+- modular architecture
+- deterministic workflow control
+- compliance-aware automation
+- human-in-the-loop approvals
+- operational reliability
+- failure isolation
+
+The goal was not building isolated AI demos, but creating a connected operational workflow platform.
+
+---
+
 ## 🚀 System Launch
 1. **Clone**: `git clone https://github.com/nish1502/investor-ops-intelligence-suite.git`
 2. **Credentials**: Define security tokens in the local `.env` files.
